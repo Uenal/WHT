@@ -109,7 +109,7 @@ public class ExperimentGUI {
 		frame.getContentPane().add(panel_1);
 		
 		txtCounter = new JTextField();
-		txtCounter.setText("Zaehler: "+ 0);
+		txtCounter.setText((counter + 1) + " / " + colors.length);
 		txtCounter.setEditable(false);
 		txtCounter.setBounds(0, 357, 64, 37);
 		frame.getContentPane().add(txtCounter);
@@ -135,11 +135,11 @@ public class ExperimentGUI {
 			        }
 			        
 					panel_2.setColor(colors[counter++]);
-					txtCounter.setText("Zähler: "+ counter);
+					txtCounter.setText((counter + 1) + " / " + colors.length);
 			        panel_2.repaint();
 				}else{
 					
-					JOptionPane.showMessageDialog(null, "Vielen Dank für die Zusammenarbeit", "Meldung", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Vielen Dank f\u00FCr die Zusammenarbeit", "Meldung", JOptionPane.INFORMATION_MESSAGE);
 					CSVWriter file = new CSVWriter();
 					file.writeCsvFile(user, user, getColor(), getRandomBrightness(), getmyBrightness());
 					System.exit(0);
