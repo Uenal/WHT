@@ -1,22 +1,16 @@
 package de.bht.wht.uebung;
 
-import java.awt.Color;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 public class CSVWriter {
 	//Delimiter used in CSV file
-    private static final String COMMA_DELIMITER = ";";
+    private static final String DELIMITER = ";";
     
     private static final String NEW_LINE_SEPARATOR = "\n";
     //CSV file header
 
-    private static final String FILE_HEADER = "user, zaehler, color, brightnessRandom, brightnessUser";
+    private static final String FILE_HEADER = "User;Counter;Color;Brightness Random;Brightness User;Deviation;";
 
     public static void writeCsvFile(String fileName, String user, String[] colorsRedGreenBlue,float[] brightnessRandom, float[] brightnessUser) {
     	
@@ -24,7 +18,7 @@ public class CSVWriter {
         FileWriter fileWriter = null;               
 
         try {
-            fileWriter = new FileWriter(fileName);
+            fileWriter = new FileWriter(fileName + ".csv");
 
             //Write the CSV file header
 
@@ -37,23 +31,28 @@ public class CSVWriter {
             for (int i = 0; i < colorsRedGreenBlue.length; i++){
             	
             	fileWriter.append(user);
-                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(DELIMITER);
                 fileWriter.append(""+i);
-                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(DELIMITER);
                 fileWriter.append(colorsRedGreenBlue[i]);
-                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(DELIMITER);
                 fileWriter.append(""+ brightnessRandom[i]);
-                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(DELIMITER);
                 fileWriter.append(""+ brightnessUser[i]);
+                fileWriter.append(DELIMITER);
+                fileWriter.append(""+  Math.abs(brightnessRandom[i] - brightnessUser[i]));
                 fileWriter.append(NEW_LINE_SEPARATOR);
             }
             
             System.out.println("CSV file was created successfully!!!");
             
         } catch (Exception e) {
+        	
             System.out.println("Error in CsvFileWriter !!!");
             e.printStackTrace();
+            
         } finally {
+        	
             try {
                 fileWriter.flush();
                 fileWriter.close();
@@ -61,6 +60,7 @@ public class CSVWriter {
                 System.out.println("Error while flushing/closing fileWriter !!!");
                 e.printStackTrace();
             }
+            
         }
     }
 }
