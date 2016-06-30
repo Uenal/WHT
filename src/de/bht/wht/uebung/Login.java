@@ -119,53 +119,28 @@ public class Login extends JDialog {
 		this.add(buttonPanel, BorderLayout.SOUTH);
 		
 	}
- 
+	
+	// listeners for OK, CANCEL and ENTER button
 	private void setUpListeners() {
  
 		passwordField.addKeyListener(new KeyAdapter() {
  
 			@Override
 			public void keyPressed(KeyEvent e) {
+				
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					login();
 				}
+				
 			}
+			
 		});
  
 		okButton.addActionListener(new ActionListener() {
- 
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				if(!nameField.getText().isEmpty()) {
-					
-					if(personen.get(nameField.getText()) != null) {
-					
-						if(personen.get(nameField.getText()).equals(passwordField.getText())) {
-							
-							login();
-							
-						} else {
-							
-							warningLabel.setForeground(Color.red);
-							warningLabel.setText("Das Kennwort ist falsch.");
-							
-						}
-					
-					} else {
-						
-						warningLabel.setForeground(Color.red);
-						warningLabel.setText("Der Benutzernamen wurde nicht gefunden.");
-						
-					} 
-					
-				} else {
-					
-					warningLabel.setForeground(Color.red);
-					warningLabel.setText("Bitte geben Sie den Benutzernamen ein.");
-					
-				}
-				
+				login();
 			}
 			
 		});
@@ -176,28 +151,57 @@ public class Login extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(1);
 			}
+			
 		});
+		
 	}
 	
 	public void login() {
-		
-		EventQueue.invokeLater(new Runnable() {
 			
-			public void run() {
-				try {
+		if(!nameField.getText().isEmpty()) {
+			
+			if(personen.get(nameField.getText()) != null) {
+			
+				if(personen.get(nameField.getText()).equals(passwordField.getText())) {
 					
-					ExperimentGUI window = new ExperimentGUI(nameField.getText());
-					window.frame.setVisible(true);
+					EventQueue.invokeLater(new Runnable() {
+						
+						public void run() {
+							try {
+								
+								ExperimentGUI window = new ExperimentGUI(nameField.getText());
+								window.frame.setVisible(true);
+								
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						
+					});
 					
-				} catch (Exception e) {
-					e.printStackTrace();
+					Login.this.setVisible(false);
+					
+				} else {
+					
+					warningLabel.setForeground(Color.red);
+					warningLabel.setText("Das Kennwort ist falsch.");
+					
 				}
-			}
 			
-		});
-		
-		Login.this.setVisible(false);
-		
+			} else {
+				
+				warningLabel.setForeground(Color.red);
+				warningLabel.setText("Der Benutzernamen wurde nicht gefunden.");
+				
+			} 
+			
+		} else {
+			
+			warningLabel.setForeground(Color.red);
+			warningLabel.setText("Bitte geben Sie den Benutzernamen ein.");
+			
+		}
+			
 	}
 	
 	/**

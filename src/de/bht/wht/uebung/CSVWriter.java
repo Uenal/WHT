@@ -10,7 +10,7 @@ public class CSVWriter {
     private static final String NEW_LINE_SEPARATOR = "\n";
     //CSV file header
 
-    private static final String FILE_HEADER = "User;Counter;Color;Brightness Random;Brightness User;Deviation;";
+    private static final String FILE_HEADER = "User;Counter;Color;Brightness Random;Brightness User;Deviation";
 
     public static void writeCsvFile(String fileName, String user, String[] colorsRedGreenBlue,float[] brightnessRandom, float[] brightnessUser) {
     	
@@ -20,28 +20,25 @@ public class CSVWriter {
         try {
             fileWriter = new FileWriter(fileName + ".csv");
 
-            //Write the CSV file header
-
-            fileWriter.append(FILE_HEADER.toString());
-
-            //Add a new line separator after the header
-
+            // write the CSV file header and add a new line
+            fileWriter.append(FILE_HEADER);
             fileWriter.append(NEW_LINE_SEPARATOR);
             
-            for (int i = 0; i < colorsRedGreenBlue.length; i++){
+            for (int i = 0; i < colorsRedGreenBlue.length; i++) {
             	
             	fileWriter.append(user);
                 fileWriter.append(DELIMITER);
-                fileWriter.append(""+i);
+                fileWriter.append("" + (i + 1));
                 fileWriter.append(DELIMITER);
                 fileWriter.append(colorsRedGreenBlue[i]);
                 fileWriter.append(DELIMITER);
-                fileWriter.append(""+ brightnessRandom[i]);
+                fileWriter.append("" + brightnessRandom[i]);
                 fileWriter.append(DELIMITER);
-                fileWriter.append(""+ brightnessUser[i]);
+                fileWriter.append("" + brightnessUser[i]);
                 fileWriter.append(DELIMITER);
-                fileWriter.append(""+  Math.abs(brightnessRandom[i] - brightnessUser[i]));
+                fileWriter.append("" +  Math.abs(brightnessRandom[i] - brightnessUser[i]));
                 fileWriter.append(NEW_LINE_SEPARATOR);
+                
             }
             
             System.out.println("CSV file was created successfully!!!");
